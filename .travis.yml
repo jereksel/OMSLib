@@ -16,6 +16,7 @@ android:
     - '.+'
 
 script:
+    - chmod +x gradlew
     - ./gradlew clean assembleDebug
 
 cache:
