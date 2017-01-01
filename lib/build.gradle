@@ -36,8 +36,8 @@ android {
 }
 
 bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
+    user = System.getenv('BINTRAY_USER') == null ?: ""
+    key = System.getenv('BINTRAY_KEY') == null ?: ""
     publish = true
     pkg {
         repo = 'maven'
