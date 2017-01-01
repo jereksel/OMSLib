@@ -12,7 +12,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
-def libraryVersion = System.getenv("TRAVIS_TAG") == null ?: ""
+def libraryVersion = System.getenv("TRAVIS_TAG") ?: "a"
 
 android {
     compileSdkVersion 25
@@ -36,8 +36,8 @@ android {
 }
 
 bintray {
-    user = System.getenv('BINTRAY_USER') == null ?: ""
-    key = System.getenv('BINTRAY_KEY') == null ?: ""
+    user = System.getenv('BINTRAY_USER') ?: "b"
+    key = System.getenv('BINTRAY_KEY') ?: "c"
     publish = true
     pkg {
         repo = 'maven'
