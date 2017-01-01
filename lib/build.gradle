@@ -1,4 +1,18 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+
+def libraryVersion = System.getenv("TRAVIS_TAG") ?: "a"
 
 android {
     compileSdkVersion 25
@@ -17,6 +31,34 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER') ?: "b"
+    key = System.getenv('BINTRAY_KEY') ?: "c"
+    publish = true
+    pkg {
+        repo = 'maven'
+        name = "OMSLib"
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            name = "$libraryVersion"
+            vcsTag = "$libraryVersion"
+        }
+    }
+    publications = ['MyPublication']
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            groupId 'com.jereksel'
+            artifactId 'omslib'
+            version libraryVersion
+            artifact "${project.buildDir}/outputs/aar/${project.getName()}-release.aar"
         }
     }
 }
