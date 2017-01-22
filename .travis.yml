@@ -22,7 +22,7 @@ script:
 deploy:
   provider: script
   skip_cleanup: true
-  script: ./gradlew :lib:bintrayUpload
+  script: ./gradlew :lib:publish :lib:generatePomFileForMyPublicationPublication :lib:bintrayUpload
   on:
     tags: true
     all_branches: false

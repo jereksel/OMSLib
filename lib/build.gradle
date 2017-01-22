@@ -10,7 +10,6 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
-apply plugin: 'maven'
 
 def libraryVersion = System.getenv("TRAVIS_TAG") ?: "a"
 
@@ -59,8 +58,14 @@ publishing {
             artifactId 'omslib'
             version libraryVersion
             artifact "${project.buildDir}/outputs/aar/${project.getName()}-release.aar"
+            artifact sourcesJar
         }
     }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
 }
 
 dependencies {
