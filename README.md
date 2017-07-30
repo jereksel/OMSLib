@@ -1,4 +1,7 @@
 # OMSLib
+
+OMS (Overlay Manager Service) Java files from AOSP in Android library.
+
 [![Bintray](https://img.shields.io/bintray/v/jereksel/maven/OMSLib.svg)](https://bintray.com/jereksel/maven/OMSLib)
 
 
