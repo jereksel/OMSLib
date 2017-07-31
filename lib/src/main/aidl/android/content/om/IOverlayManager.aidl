@@ -89,6 +89,34 @@ interface IOverlayManager {
     boolean setEnabled(in String packageName, in boolean enable, in int userId);
 
     /**
+     * Request that an overlay package be enabled or disabled when possible to
+     * do so.
+     *
+     * It is always possible to disable an overlay, but due to technical and
+     * security reasons it may not always be possible to enable an overlay. An
+     * example of the latter is when the related target package is not
+     * installed. If the technical obstacle is later overcome, the overlay is
+     * automatically enabled at that point in time.
+     *
+     * An enabled overlay is a part of target package's resources, i.e. it will
+     * be part of any lookups performed via {@link android.content.res.Resources}
+     * and {@link android.content.res.AssetManager}. A disabled overlay will no
+     * longer affect the resources of the target package. If the target is
+     * currently running, its outdated resources will be replaced by new ones.
+     * This happens the same way as when an application enters or exits split
+     * window mode.
+     *
+     * @param packageName The name of the overlay package.
+     * @param enable true to enable the overlay, false to disable it.
+     * @param userId The user for which to change the overlay.
+     * @param shouldWait true to wait to reload resources until refresh is called
+     * @return true if the system successfully registered the request, false
+     *         otherwise.
+     */
+    boolean setEnabled(in String packageName, in boolean enable, in int userId,
+                       in boolean shouldWait);
+
+    /**
      * Change the priority of the given overlay to be just higher than the
      * overlay with package name newParentPackageName. Both overlay packages
      * must have the same target and user.
@@ -126,4 +154,10 @@ interface IOverlayManager {
      * @param userId The user for which to change the overlay.
      */
     boolean setLowestPriority(in String packageName, in int userId);
+
+    /**
+     * Refresh assets
+     * @param uid the user to refresh assets for
+     */
+    void refresh(in int uid);
 }
